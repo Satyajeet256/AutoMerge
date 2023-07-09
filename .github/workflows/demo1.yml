@@ -3,6 +3,10 @@ name: Auto Push to Main
 on:
   schedule:
     - cron: "0/5 * * * *"
+
+  push:
+    branches:
+      - develop  
     
 jobs:
   push_to_main:
@@ -32,6 +36,7 @@ jobs:
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
+          git pull origin main
           git add .
           git commit -m "Add/update files from develop"
           git push origin main
