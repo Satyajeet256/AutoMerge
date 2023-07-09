@@ -14,18 +14,23 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   
-      - name: Add Files
+      - name: Merge Changes
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your-email@example.com"
+          git config --global user.name "Satyajeet256"
+          git config --global user.email "snpaygude@gmail.com"
           git checkout main
           git merge develop --no-ff --no-edit
-          git add .
-          git status   # Optional: Display the status to verify the added files
+          git push origin main
 
-      - name: Commit and Push
+      - name: Add New Files
         run: |
-          git commit -m "Add new files"
-          git push origin main  
-   
-      
+          git checkout main
+          git diff --name-only develop | xargs -I % sh -c 'git checkout develop -- %'
+
+      - name: Commit and Push New Files
+        run: |
+          git config --global user.name "Satyajeet256"
+          git config --global user.email "snpaygude@gmail.com"
+          git add .
+          git commit -m "Add/update files from develop"
+          git push origin main
