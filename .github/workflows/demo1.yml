@@ -24,15 +24,22 @@ jobs:
           git config --global user.email "snpaygude@gmail.com"
           git checkout main
           git pull origin main
-          git merge --no-ff develop
-
+          if git merge --no-ff develop; then
+            echo "Merge successful."
+          else
+            echo "No changes to merge."
+            exit 78
+          fi
+          
       - name: Add New Files
+        if: steps.merge.outcome == 'success'
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
           git diff --name-only --diff-filter=A develop | xargs -I % git checkout main -- %
 
       - name: Commit and Push Changes
+        if: steps.merge.outcome == 'success'
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
