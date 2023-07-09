@@ -18,31 +18,23 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   
-      - name: Fetch Branches
+      - name: Create Temporary Branch
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
-          git fetch origin main
-          git fetch origin develop
+          git branch temporary_branch
+          git checkout temporary_branch
 
       - name: Merge Changes
-        id: merge
         run: |
-          git checkout main
           git merge --no-ff origin/develop --allow-unrelated-histories
 
       - name: Add New Files
-        if: steps.merge.outcome == 'success'
         run: |
-          git config --global user.name "Satyajeet256"
-          git config --global user.email "snpaygude@gmail.com"
           git diff --name-only --diff-filter=A origin/develop | xargs -I % git checkout main -- %
 
       - name: Commit and Push Changes
-        if: steps.merge.outcome == 'success'
         run: |
-          git config --global user.name "Satyajeet256"
-          git config --global user.email "snpaygude@gmail.com"
           git add .
           git commit -m "Merge changes from develop"
-          git push origin main
+          git push -f origin temporary_branch:main
