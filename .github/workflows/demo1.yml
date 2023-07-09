@@ -4,18 +4,37 @@ on:
   schedule:
     - cron: "0/5 * * * *"
 
+  push:
+    branches:
+      - develop  
+    
 jobs:
-  push_to_main:
+  merge_to_main:
     runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Push to Main
+        env:
+          ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  
+      - name: Create Temporary Branch
         run: |
-          git config --global user.name "satyajeet256"
+          git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
-          git checkout develop
-          git merge develop --no-ff --no-edit
-          git push origin main
+          git branch temporary_branch
+          git checkout temporary_branch
+
+      - name: Merge Changes
+        run: |
+          git merge --no-ff origin/develop --allow-unrelated-histories
+
+      - name: Add New Files
+        run: |
+          git diff --name-only --diff-filter=A origin/develop | xargs -I % git checkout main -- %
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "Merge changes from develop"
+          git push -f origin temporary_branch:main
