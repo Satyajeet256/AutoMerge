@@ -4,8 +4,6 @@ on:
   schedule:
     - cron: "0/5 * * * *"
     
-
-
 jobs:
   push_to_main:
     runs-on: windows-latest
@@ -13,8 +11,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Push to Main
         env:
           ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   
