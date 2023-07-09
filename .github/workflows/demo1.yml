@@ -19,6 +19,7 @@ jobs:
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
           git checkout main
+          git pull origin main
           git merge develop --no-ff --no-edit
           git push origin main
 
