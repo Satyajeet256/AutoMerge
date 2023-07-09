@@ -29,12 +29,7 @@ jobs:
         id: merge
         run: |
           git checkout main
-          if git merge --no-ff origin/develop; then
-            echo "Merge successful."
-          else
-            echo "No changes to merge."
-            exit 78
-          fi
+          git merge --no-ff origin/develop --allow-unrelated-histories
 
       - name: Add New Files
         if: steps.merge.outcome == 'success'
