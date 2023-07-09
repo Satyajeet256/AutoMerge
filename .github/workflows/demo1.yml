@@ -9,7 +9,7 @@ on:
       - develop  
     
 jobs:
-  push_to_main:
+  merge_to_main:
     runs-on: windows-latest
 
     steps:
@@ -25,8 +25,8 @@ jobs:
           git checkout main
           git pull origin main
           git merge --no-ff develop
-          
-     - name: Add New Files1
+
+      - name: Add New Files
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
