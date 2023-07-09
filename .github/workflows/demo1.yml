@@ -1,0 +1,21 @@
+name: Auto Push to Main
+
+on:
+  schedule:
+    - cron: "0,30 * * * *"
+
+jobs:
+  push_to_main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Push to Main
+        run: |
+          git config --global user.name "satyajeet256"
+          git config --global user.email "snpaygude@gmail.com"
+          git checkout main
+          git merge develop --no-ff --no-edit
+          git push origin main
