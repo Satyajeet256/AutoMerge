@@ -24,14 +24,18 @@ jobs:
           git config --global user.email "snpaygude@gmail.com"
           git checkout main
           git pull origin main
-          git merge --no-commit develop
-          git checkout -- .
+          git merge --no-ff develop
           
-      - name: Commit and Push New Files
+     - name: Add New Files1
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
-          git pull origin main
+          git diff --name-only --diff-filter=A develop | xargs -I % git checkout main -- %
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Satyajeet256"
+          git config --global user.email "snpaygude@gmail.com"
           git add .
           git commit -m "Merge changes from develop"
           git push origin main
