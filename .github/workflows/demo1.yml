@@ -3,6 +3,8 @@ name: Auto Push to Main
 on:
   schedule:
     - cron: "0/5 * * * *"
+    
+
 
 jobs:
   push_to_main:
@@ -13,6 +15,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Push to Main
+        env:
+          ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          
         run: |
           git config --global user.name "Satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
