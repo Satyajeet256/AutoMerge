@@ -2,7 +2,7 @@ name: Auto Push to Main
 
 on:
   schedule:
-    - cron: "0/2 * * * *"
+    - cron: "0/5 * * * *"
 
 jobs:
   push_to_main:
@@ -16,6 +16,6 @@ jobs:
         run: |
           git config --global user.name "satyajeet256"
           git config --global user.email "snpaygude@gmail.com"
-          git checkout main
+          git checkout develop
           git merge develop --no-ff --no-edit
           git push origin main
