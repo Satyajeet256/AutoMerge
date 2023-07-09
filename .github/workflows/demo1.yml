@@ -24,8 +24,8 @@ jobs:
 
       - name: Add New Files
         run: |
-          git checkout main
-          git diff --name-only develop | xargs -I % sh -c 'git checkout develop -- %'
+          git checkout develop
+          git ls-files -o --exclude-standard | xargs -I % git checkout main -- %
 
       - name: Commit and Push New Files
         run: |
